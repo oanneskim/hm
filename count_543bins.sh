@@ -110,20 +110,4 @@ for (( i=0; i<${#CHROM[@]}; i+=3)){
 	}'\
 	| groupBy -g 1,2,3,4,5,6 -c 7,8,9 -o collapse,collapse,collapse \
 	| parse_543 $FIVE $FOUR $THREE
-	exit 1
 }
-#tmp=`make_temp`
-#while read -r line; do
-#	reg=`echo -e "$line" | awk '{ print $1 ":" $2 "-" $3;}'`;
-#	$FILEA | awk -v OFS="\t" -v FL=$FLANK '{ 
-#	s=$2-FL; if(s<0){s=0;} print $1,s,$3+FL,$4 "," $2 "," $3,$5,$6;}
-#	'\
-#
-#	| samtools view -b $FILEB $reg \
-#	| intersectBed -a stdin -b $FILEB -wa -wb  \
-##| awk -v OFS="\t" -v CL=$CL '{ split($4,a,","); print $1,a[2],a[3],a[1],$5,$6,$8,$9,$((6+CL));}' \
-##| groupBy -g 1,2,3,4,5,6 -c 7,8,9 -o collapse,collapse,collapse
-#done < $FILEA 
-
-#echo $FILEA $FILEB
-#cat $FILEA | awk -v OFS="\t" -v FL=$FLANK '{s=$2-FL; if(s<0){s=0;} print $1,s,$3+FL,$4 "," $2 "," $3,$5,$6;}' \
