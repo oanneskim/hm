@@ -8,12 +8,17 @@ CL=-1;
 usage(){
 	echo "
 	usage : $0 [options]
-	 -a <bed> : target  
-	 -b <bam> : read
-	 -5 <num>,<num> : 5' boundary
-	 -3 <num>,<num> : 3' boundary
-	 -4 <num>,<num> : body
+	 required:
+	 -a <bed> : target interval
+	 -b <bam> : read, this program takes the center
+
+	 optional:	
+	 -5 <num>,<num>,<num> : relative positions of up/downstream, number of bins 
+			from the 5' boundary of the target; default $FIVE
+	 -3 <num>,<num>,<num> : .. from the 3' boundary of the target; default: $FOUR
+	 -4 <num>,<num>,<num> : .. from the body boundary of the target; default: $THREE
 	 -c <num> : column to sum in the read file (default not-used)
+		Note) use -c 4 for bam converted from chipchip gff
 	"
 }
 
