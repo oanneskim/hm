@@ -41,7 +41,7 @@ shift $(($OPTIND-1))
 . hm.sh
 
 read_ext(){
-	awk -v OFS="\t" -v FIVE=$1 -v THREE=$2  '{ split(FIVE,l,",");split(THREE,r,","); s=$2+l[1]; if(s<0){s=0;} print $1,s,$3+r[2];} '
+	awk -v OFS="\t" -v FIVE=$1 -v THREE=$2  '{ split(FIVE,l,",");split(THREE,r,","); s=$2+l[1]; if(s<0){s=0;} print $1,s,$3+r[2],$0;} '
 }
 
 parse_543(){
@@ -100,14 +100,16 @@ for (( i=0; i<${#CHROM[@]}; i+=3)){
 	C=${CHROM[$i]};S=${CHROM[$i+1]};E=${CHROM[$i+2]};
 	echo "$C" >&2
 	## extract target in a segment 
-	echo -e "$C\t$S\t$E" | intersectBed -a $FILEA -b stdin -wa -u > $tmp;
+	echo -e "$C\t$S\t$E" | intersectBed -a $FILEA -b stdin -wa -u | read_ext $FIVE $THREE > $tmp;
 	## collect scores
 	reg=`echo -e "$C:$S-$E"`;
 	samtools view -b $FILEB $reg | bamToBed \
 	| intersectBed -a $tmp -b stdin -wa -wb \
-	| awk -v OFS="\t" -v LA=$LA '{
+	| cut -f 4- | awk -v OFS="\t" -v LA=$LA '{
 		print $1,$2,$3,$4,$5,$6,$((LA+2)),$((LA+3)),$((LA+4));  
 	}'\
 	| groupBy -g 1,2,3,4,5,6 -c 7,8,9 -o collapse,collapse,collapse \
 	| parse_543 $FIVE $FOUR $THREE
+	exit 1
+	
 }
