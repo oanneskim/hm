@@ -41,7 +41,7 @@ shift $(($OPTIND-1))
 . hm.sh
 
 read_ext(){
-	awk -v OFS="\t" -v FIVE=$1 -v THREE=$2  '{ s=$2+FIVE; if(s<0){s=0;} print $1,s,$3+THREE;} '
+	awk -v OFS="\t" -v FIVE=$1 -v THREE=$2  '{ split(FIVE,l,",");split(THREE,r,","); s=$2+l[1]; if(s<0){s=0;} print $1,s,$3+r[2];} '
 }
 
 parse_543(){
