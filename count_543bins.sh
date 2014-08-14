@@ -110,6 +110,4 @@ for (( i=0; i<${#CHROM[@]}; i+=3)){
 	}'\
 	| groupBy -g 1,2,3,4,5,6 -c 7,8,9 -o collapse,collapse,collapse \
 	| parse_543 $FIVE $FOUR $THREE
-	exit 1
-	
 }
