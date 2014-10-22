@@ -1,9 +1,13 @@
 hm: hyunmin's contribution
 ==
 
-bedfriehds.sh : converters and parsers for bed and its friends (sam,gff,...) 
----
 
+
+bedfriehds.sh : 
+---
+converters and parsers for bed and its friends (sam,gff,...) 
+
+mpileupToFreq: mpileup parser
  ```
   
   usage: 
@@ -15,7 +19,8 @@ bedfriehds.sh : converters and parsers for bed and its friends (sam,gff,...)
   samtools mpileup <bam> | mpileupToFreq -
   
  ```
-
+Others:
+---
   * nimbleGenGff_to_bam: convert nimblegen GFF to bam file (the log2 ratio is stored in the 4th column)
 	```
 	# example 
