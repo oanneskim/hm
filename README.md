@@ -1,7 +1,9 @@
-hm
+hm: hyunmin's contribution
 ==
-hyunmin's contribution
-  * bedfriehds.sh
+
+bedfriehds.sh : converters and parsers for bed and its friends (sam,gff,...) 
+---
+
  ```
   
   usage: 
@@ -13,8 +15,6 @@ hyunmin's contribution
   samtools mpileup <bam> | mpileupToFreq -
   
  ```
-  * 
-
 
   * nimbleGenGff_to_bam: convert nimblegen GFF to bam file (the log2 ratio is stored in the 4th column)
 	```
