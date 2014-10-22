@@ -7,18 +7,19 @@ bedfriehds.sh :
 ---
 converters and parsers for bed and its friends (sam,gff,...) 
 
-mpileupToFreq: mpileup parser
+  * mpileupToFreq: mpileup parser
  ```
   
   usage: 
   ## import functions
   . bedfriends.sh
-  ## run an example
+  ## test 
   mpileupToFreq test
-  ## run with a data
+  ## run 
   samtools mpileup <bam> | mpileupToFreq -
   
  ```
+ 
 Others:
 ---
   * nimbleGenGff_to_bam: convert nimblegen GFF to bam file (the log2 ratio is stored in the 4th column)
