@@ -20,7 +20,7 @@ converters and parsers for bed and its friends (sam,gff,...)
   samtools mpileup <bam> | mpileupToFreq -
   
   ```
-  * bedSeq: extract seqence for each bed interval
+  * bedSeq: extract genomic seqences for each bed interval
   ```
   #usage:
   bedSeq <bed> <fasta|fasta_dir> <left_flank> <right_flank> <strand_specific>
