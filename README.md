@@ -22,11 +22,14 @@ converters and parsers for bed and its friends (sam,gff,...)
   ```
   * bedSeq: extract genomic seqences for each bed interval
   ```
-  #usage:
+  ## usage:
   bedSeq <bed> <fasta|fasta_dir> <left_flank> <right_flank> <strand_specific>
   
-  #example:
+  ## examplar output1 (flanking 10bp):
+  chr22   16168803    16168860    gene	0   +   TAAAGCATTT,GATAAAATTCAACATTTTATTGTAAAAACCCTTCAAAAAACAGGGTATAGAAGAAAC,ATACCTCAAC
   
+  ## example2 (with strand_specific = 1)
+  chr22   16168803    16168860    gene	0   +	TAAAGCATTT,GATAAAATTCAACATTTTATTGTAAAAACCCTTCAAAAAACAGGGTATAGAAGAAAC,ATACCTCAAC
   ```
 Others:
 ---
