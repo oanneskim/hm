@@ -35,10 +35,11 @@ cmd='
         ## handle insertion deletion
         my %h=(); while($S=~/([-|+])(\d+)/g){ $h{$1}{$2} = 1; } ## regular expression cannot read the previous pattern
         foreach my $k1 (keys %h){
+        my $k1_old = $k1;
         foreach my $k2 (keys %{$h{$k1}}){
             if($k1 eq "+"){ $k1 = "\\+";} ## fixed bug
             while($S =~/$k1$k2([ACGTNacgtn]{$k2})/g){
-                $F{"$k1:$1"}++;
+                $F{"$k1_old:$1"}++;
             }
             $S =~s/$k1$k2[ACGTNacgtn]{$k2}//g;
         }}
