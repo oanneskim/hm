@@ -3,7 +3,7 @@ hm: hyunmin's contribution
 
 
 
-bedfriehds.sh : 
+bedfriends.sh : 
 ---
 converters and parsers for bed and its friends (sam,gff,...) 
 
