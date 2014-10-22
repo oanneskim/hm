@@ -9,7 +9,7 @@ converters and parsers for bed and its friends (sam,gff,...)
 
   * mpileupToFreq: mpileup parser
  
- ```
+  ```
   
   usage: 
   ## import functions
@@ -19,8 +19,15 @@ converters and parsers for bed and its friends (sam,gff,...)
   ## run 
   samtools mpileup <bam> | mpileupToFreq -
   
- ```
- 
+  ```
+  * bedSeq: extract seqence for each bed interval
+  ```
+  #usage:
+  bedSeq <bed> <fasta|fasta_dir> <left_flank> <right_flank> <strand_specific>
+  
+  #example:
+  
+  ```
 Others:
 ---
   * nimbleGenGff_to_bam: convert nimblegen GFF to bam file (the log2 ratio is stored in the 4th column)
