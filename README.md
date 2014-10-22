@@ -8,6 +8,7 @@ bedfriehds.sh :
 converters and parsers for bed and its friends (sam,gff,...) 
 
   * mpileupToFreq: mpileup parser
+ 
  ```
   
   usage: 
