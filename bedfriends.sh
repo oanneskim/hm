@@ -16,7 +16,6 @@ testData='
 1   3756074 C   12  ............    GEGG==GFGDDE
 20  1234    A   20  ,,,,,..,.-4CACC.-4CACC....,.,,.^~.  ==<<<<<<<<<<<::<;2<<
 '
-
 cmd='
     use strict;
     my $offset=33; 
@@ -25,7 +24,7 @@ cmd='
     while(<STDIN>){
         chomp; next if ($_ eq "");
         my ($chrom, $base1pos,$refseq, $n, $S, $Q) = split /\t/,$_;
-        if($S eq "*"){ return "*"};
+        if($S eq "*" || $n < 1){ next;} 
 
         my %F = (); ## frequencies
 
@@ -37,6 +36,7 @@ cmd='
         my %h=(); while($S=~/([-|+])(\d+)/g){ $h{$1}{$2} = 1; } ## regular expression cannot read the previous pattern
         foreach my $k1 (keys %h){
         foreach my $k2 (keys %{$h{$k1}}){
+            if($k1 eq "+"){ $k1 = "\\+";} ## fixed bug
             while($S =~/$k1$k2([ACGTNacgtn]{$k2})/g){
                 $F{"$k1:$1"}++;
             }
@@ -61,6 +61,7 @@ cmd='
         print "$chrom","\t",$base1pos-1,"\t",join (",", map{"$_:$F{$_}"} keys %F),"\n";
     }
 '
+
 if [ $1 == "test" ]; then
     echo "$testData" >&2
     echo "$testData" | perl -e "$cmd";
