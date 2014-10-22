@@ -25,11 +25,13 @@ converters and parsers for bed and its friends (sam,gff,...)
   ## usage:
   bedSeq <bed> <fasta|fasta_dir> <left_flank> <right_flank> <strand_specific>
   
-  ## examplar output1 (flanking 10bp):
-  chr22   16168803    16168860    gene	0   +   TAAAGCATTT,GATAAAATTCAACATTTTATTGTAAAAACCCTTCAAAAAACAGGGTATAGAAGAAAC,ATACCTCAAC
-  
-  ## example2 (with strand_specific = 1)
-  chr22   16168803    16168860    gene	0   +	TAAAGCATTT,GATAAAATTCAACATTTTATTGTAAAAACCCTTCAAAAAACAGGGTATAGAAGAAAC,ATACCTCAAC
+  ## example(flanking 10bp):
+  # strand_specific=0
+chr22	51062323	51062325	t:1;t:1	51062323,51062324	-	GAGACTCCGT,CT,CAAAAAAAAA
+  # strand_specific=1
+chr22	51062323	51062325	t:1;t:1	51062323,51062324	-	TTTTTTTTTG,AG,ACGGAGTCTC
+
+
   ```
 Others:
 ---
