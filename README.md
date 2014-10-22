@@ -1,6 +1,20 @@
 hm
 ==
 hyunmin's contribution
+  * bedfriehds.sh
+ ```
+  
+  usage: 
+  ## import functions
+  . bedfriends.sh
+  ## run an example
+  mpileupToFreq test
+  ## run with a data
+  samtools mpileup <bam> | mpileupToFreq -
+  
+ ```
+  * 
+
 
   * nimbleGenGff_to_bam: convert nimblegen GFF to bam file (the log2 ratio is stored in the 4th column)
 	```
