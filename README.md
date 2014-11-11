@@ -6,17 +6,16 @@ mpileup.sh:
 mpileup parser 
  * mpileupToFreq: mpileup parser
   ```
-  
   usage: 
   ## import functions
-  . bedfriends.sh
+  . mpileup.sh
   ## test 
   mpileupToFreq test
   ## run 
   samtools mpileup <bam> | mpileupToFreq -
   ```
   
-* out4Tassa
+* out4Tassa: mpileup output formatter
 ```
   mpileupToFreq <mpileup_file> | out4Tassa
 ```
