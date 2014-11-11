@@ -5,7 +5,8 @@ mpileup.sh:
 ---
 mpileup parser 
  * mpileupToFreq: mpileup parser
-  ```
+
+```
   usage: 
   ## import functions
   . mpileup.sh
@@ -13,7 +14,7 @@ mpileup parser
   mpileupToFreq test
   ## run 
   samtools mpileup <bam> | mpileupToFreq -
-  ```
+```
   
 * out4Tassa: mpileup output formatter
 ```
