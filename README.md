@@ -14,8 +14,12 @@ mpileup parser
   mpileupToFreq test
   ## run 
   samtools mpileup <bam> | mpileupToFreq -
+  ```
+  
 * out4Tassa
-
+```
+  mpileupToFreq <mpileup_file> | out4Tassa
+```
 
 bedfriends.sh : 
 ---
