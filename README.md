@@ -1,14 +1,10 @@
 hm: hyunmin's contribution
 ==
 
-
-
-bedfriends.sh : 
+mpileup.sh:
 ---
-converters and parsers for bed and its friends (sam,gff,...) 
-
-  * mpileupToFreq: mpileup parser
- 
+mpileup parser 
+ * mpileupToFreq: mpileup parser
   ```
   
   usage: 
@@ -18,6 +14,14 @@ converters and parsers for bed and its friends (sam,gff,...)
   mpileupToFreq test
   ## run 
   samtools mpileup <bam> | mpileupToFreq -
+* out4Tassa
+
+
+bedfriends.sh : 
+---
+converters and parsers for bed and its friends (sam,gff,...) 
+
+ 
   
   ```
   * bedSeq: extract genomic seqences for each bed interval
