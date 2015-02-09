@@ -1,9 +1,34 @@
-#!/bin/env bash 
+#!/bin/bash 
 
-mpileupToFreq(){ usage="
-	usage: $FUNCNAME <mpileup>  
+usage="
+	usage: $BASH_SOURCE [options] <mpileup>  
+	 [options]:
+	  -h : help
+	  -s : strand specific (default no)
+	  -d <int> : minimum depth  (default 1)
+	  -m <float> : minimum proportion of 2nd minor (default 0)
+	  -a <int> : min num of alleles (default 1);
 "
-if [ $# -ne 1 ]; then echo $usage; return; fi
+#ref) http://www.htslib.org/doc/samtools-1.2.html
+CMD="$BASH_SOURCE $*";
+MIND=1;
+MIN2=0;
+MINA=1;
+STRAND=0;
+
+while getopts "sd:m:a:" arg; do
+	case $arg in
+		d) MIND=${OPTARG};;
+		a) MINA=${OPTARG};;
+		m) MIN2=${OPTARG};;
+		s) STRAND=1;;
+		?) echo "$usage";exit 1;;
+	esac
+done
+shift $(( OPTIND - 1 ));
+if [ $# -ne 1 ]; then
+	echo "$usage"; exit 1;
+fi
 
 testData='
 1	888659	T	14	c$CCCCcccCcCccc	GCECEFGEEBGEE@
@@ -29,18 +54,12 @@ chr1	17729	T	47	.,,,,,,,,,.,,..........,..,,,.,,,,,...,,..,.,,,	AFHHHIFGFI4CG>A:
 chr1	17730	C	46	.,a,aaa,,,.,,..A.AA...A,..a,,.,,,,,...,,..,.,,	CFFHHHAFIJ:<B:ACCCECEH@HFC5DD=DDDDDIIHCDJJDIDD
 chr1	17731	C	47	.$,,,,,,,,,.,,..........,..,,,.,,,,,...,,..,.,,,	BFFHHHF?GJ:2G>DCDCECBHCHFB>DDCDCDDDIJICDJJDJD@D	
 '
-
 cmd='
 	use strict;
-	my $offset=33; 
-	#my @types= (split / /,"A C G T a c g t \$+ \$- \^+ \^-");
-	#print "chrom\tbase0pos\t",join( "\t",@types),"\tinsertion\tdeletion\n";
-	while(<STDIN>){
-		chomp; next if ($_ eq "");
-		my ($chrom, $base1pos,$refseq, $n, $S, $Q) = split /\t/,$_;
-		if($S eq "*" || $n < 1){ next;}	
-
-		my %F = (); ## frequencies
+	sub handle1{
+		my ($chrom, $base1pos,$refseq, $n, $S, $Q, $F) = @_;
+		my $offset=33; 
+		if($S eq "*" || $n < 1){ return 0;}
 
 		## handle . and , 
 		my $tmp = uc $refseq; $S=~s/\./$tmp/g;
@@ -53,38 +72,72 @@ cmd='
 		foreach my $k2 (keys %{$h{$k1}}){
 			if($k1 eq "+"){ $k1 = "\\+";} ## fixed bug
 			while($S =~/$k1$k2([ACGTNacgtn]{$k2})/g){
-				$F{"$k1_old:$1"}++;
+				$F->{"$k1_old:$1"}++;
 			}
 			$S =~s/$k1$k2[ACGTNacgtn]{$k2}//g;
 		}}
 
 		## handle others
+		$S=~s/\^.//g;
+		$S=~s/\$//g;
 		my @A = split //,$S;
 		my @B = split //,$Q;
+		my $n=0;
 		for(my $i=0; $i <= $#A; $i++){
 			my $s= $A[$i];
 			my $q= ord($B[$i]) - $offset;
 			my $p = 1-exp(-$q/10)/exp(10);
 			my $w = int($p+0.5);
-			if($i < $#A && $A[$i+1] eq "\$"){
-				$s = $s."\$"; $i++; ## additional shifting
-			}elsif($s eq "\^"){ $s .= $A[$i+2]; $i +=2; }
-			$F{$s} += $w;
+			if( $s ne "<" && $s ne ">"){ #ignore reference skipping 
+				if(STRAND){
+					$F->{$s} += $w;
+				}else{
+					$F->{uc $s} += $w;
+				}
+				$n += $w;
+			}
 		}
-
-		## output 1
-		print "$chrom","\t",$base1pos-1,"\t",uc $refseq,"\t",join (",", map{"$_:$F{$_}"} keys %F),"\n";
-		## output 2
-		
+		return $n;
+	}
+	while(<STDIN>){
+		chomp; next if ($_ eq "");
+		my ($chrom, $base1pos,$refseq, @A) = split /\t/,$_;
+		my $txt="";
+		my $tot=0;
+		my %nn = ();
+		for (my $i=0; $i < scalar @A; $i += 3){
+			my ($n, $S, $Q) = ($A[$i], $A[$i+1], $A[$i+2]); 
+			my %F=();
+			my $n1 = handle1($chrom,$base1pos,$refseq,$n,$S,$Q,\%F);
+			$tot += $n1;
+			$txt .="\t".join (",", map{"$_:$F{$_}"} keys %F);
+			foreach my $nu (keys %F){ $nn{$nu}+=$F{$nu}; }
+		}
+		if($tot >= MIND &&
+			scalar keys %nn >= MINA ){	
+			if (MIN2 > 0){
+				my @a= sort {$nn{$b}<=>$nn{$a}} keys %nn;
+				if( $#a > 0 && $nn{ $a[1] }/$tot >= MIN2){
+					print "$chrom\t",$base1pos-1,"\t",uc $refseq,$txt,"\n";
+				}
+			}else{
+					print "$chrom\t",$base1pos-1,"\t",uc $refseq,$txt,"\n";
+			}
+		}
 	}
 '
+cmd=${cmd//MIND/$MIND}
+cmd=${cmd//MINA/$MINA}
+cmd=${cmd//MIN2/$MIN2}
+cmd=${cmd//STRAND/$STRAND}
+
 if [ $1 == "test" ]; then
 	echo "$testData" >&2
 	echo "$testData" | perl -e "$cmd";
 else
+	echo "# CMD: $CMD"
 	cat $1 | perl -e "$cmd"
 fi
-}
 
 out4Tassa(){
 	perl -e ' use strict;
