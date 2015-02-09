@@ -6,7 +6,7 @@ mpileup parser
 
 ```
   usage: 
-  mpileup_to_freq [options] <bam> [<bam>..]
+  mpileup_to_freq.sh [options] <bam> [<bam>..]
 
 # OUTPUT example:
 chr1    935397  G   A:203,G:229 A:217,T:1,G:360 A:150,G:93  A:74,G:67
@@ -16,10 +16,6 @@ chr1    940808  C   +:A:5,+:a:1,C:7 +:A:4,+:a:4,C:18    +:A:11,+:a:4,C:57   +:A:
 
 ```
   
-* out4Tassa: mpileup output formatter
-```
-  mpileupToFreq <mpileup_file> | out4Tassa
-```
 
 bedfriends.sh : 
 ---
