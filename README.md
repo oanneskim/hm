@@ -1,23 +1,31 @@
 hm: hyunmin's contribution
 ==
 
+mpileup.sh:
+---
+mpileup parser 
+ * mpileupToFreq: mpileup parser
 
+```
+  usage: 
+  ## import functions
+  . mpileup.sh
+  ## test 
+  mpileupToFreq test
+  ## run 
+  samtools mpileup <bam> | mpileupToFreq -
+```
+  
+* out4Tassa: mpileup output formatter
+```
+  mpileupToFreq <mpileup_file> | out4Tassa
+```
 
 bedfriends.sh : 
 ---
 converters and parsers for bed and its friends (sam,gff,...) 
 
-  * mpileupToFreq: mpileup parser
  
-  ```
-  
-  usage: 
-  ## import functions
-  . bedfriends.sh
-  ## test 
-  mpileupToFreq test
-  ## run 
-  samtools mpileup <bam> | mpileupToFreq -
   
   ```
   * bedSeq: extract genomic seqences for each bed interval
