@@ -1,19 +1,19 @@
 hm: hyunmin's contribution
 ==
 
-mpileup.sh:
----
 mpileup parser 
- * mpileupToFreq: mpileup parser
+ * mpileup_to_freq: mpileup parser
 
 ```
   usage: 
-  ## import functions
-  . mpileup.sh
-  ## test 
-  mpileupToFreq test
-  ## run 
-  samtools mpileup <bam> | mpileupToFreq -
+  mpileup_to_freq [options] <bam> [<bam>..]
+
+# OUTPUT example:
+chr1    935397  G   A:203,G:229 A:217,T:1,G:360 A:150,G:93  A:74,G:67
+chr1    935670  C   C:59,G:125  C:78,G:159  C:43,G:23   C:29,G:18
+chr1    940808  C   +:A:5,+:a:1,C:7 +:A:4,+:a:4,C:18    +:A:11,+:a:4,C:57   +:A:11,+:a:8,C:72
+..
+
 ```
   
 * out4Tassa: mpileup output formatter
