@@ -6,7 +6,7 @@ mpileup parser
 
 ```
   usage: 
-  mpileup_to_freq.sh [options] <bam> [<bam>..]
+  samtools mpileup <bam> [<bam>..] |  mpileup_to_freq.sh [options] -
 
 # OUTPUT example:
 chr1    935397  G   A:203,G:229 A:217,T:1,G:360 A:150,G:93  A:74,G:67
